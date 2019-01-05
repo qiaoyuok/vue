@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<div id="app">
+
+    <!--通过对象的方式-->
+    <h1 :style="{color:'red'}">我是标题</h1>
+
+    <!--通过对象变量的方式-->
+    <h1 :style="style">我是标题</h1>
+
+</div>
+<script src="../lib/vue.js"></script>
+
+<script>
+  var vm = new Vue({
+    el:'#app',
+
+    // 数据集合
+    data:{
+      style:{color:'blue','font-weight':'lighter'}
+    },
+  })
+</script>
+</body>
+</html>

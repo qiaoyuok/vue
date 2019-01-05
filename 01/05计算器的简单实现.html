@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+
+    <!--第一个数-->
+    <input type="text" v-model="n1">
+
+    <!--运算符-->
+    <select v-model="option">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+
+    <b>=</b>
+
+    <!--第一个数-->
+    <input type="text" v-model="n2">
+
+    <!--计算结果-->
+    <input type="text" v-model="sum">
+
+</div>
+<script src="../lib/vue.js"></script>
+
+<script>
+  var vm = new Vue({
+    el:'#app',
+
+    // 数据集合
+    data:{
+      n1:0,
+      n2:0,
+      sum:0,
+      option:"+"
+    },
+
+    // 检测数据的变化  包括 数据 n1 数据 n2 还有操作符
+    watch:{
+      n1:function () {
+        console.log(this.n1)
+        this.calc()
+      },
+      n2:function () {
+        console.log(this.n2)
+        this.calc()
+      },
+      option: function () {
+        this.calc()
+      }
+    },
+    methods:{
+
+      // 自定义计算操作
+      calc:function(){
+
+        // 简便操作 使用 eval() 函数 ： 作用是 解析执行字符串
+        var str = parseFloat(this.n1)+this.option+parseFloat(this.n2);
+
+        this.sum = eval(str);
+
+        // 传统思路
+      //   switch (this.option) {
+      //     case "+":
+      //       this.sum = parseFloat(this.n1)+parseFloat(this.n2);
+      //       break;
+      //     case "-":
+      //       this.sum = parseFloat(this.n1)-parseFloat(this.n2);
+      //       break;
+      //     case "*":
+      //       this.sum = parseFloat(this.n1)*parseFloat(this.n2);
+      //       break;
+      //     case "/":
+      //       this.sum = parseFloat(this.n1)/parseFloat(this.n2);
+      //       break;
+      //   }
+      //   console.log(this.sum)
+      }
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .inner{
+            width: 150px;
+            height: 150px;
+            background: darkcyan;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+
+    <a href="http://www.baidu.com">跳转</a>
+
+    <!--使用 .prevent阻止默认事件-->
+    <a href="http://www.baidu.com" @click.prevent="pop">弹出</a>
+
+
+    <!--事件修饰类型 一 -->
+    <div class="inner" @click="box('我是盒子')">
+
+        <!--使用 .stop阻止事件冒泡-->
+        <button @click.stop="btn('我是按钮')">按钮</button>
+
+    </div>
+
+    <!--事件修饰类型 二 -->
+    <!--先执行外层的事件，在执行内部的事件 点击事件被捕获-->
+    <div class="inner" @click.capture="capevent">
+
+        <button @click="capbtn">事件被捕获</button>
+
+    </div>
+
+    <!--事件修饰类型 三 -->
+    <!--使用 self 只有点击自身才会触发事件  -->
+    <div class="inner" @click.self="clself">
+
+        <button @click="capbtn">事件被捕获</button>
+
+    </div>
+</div>
+<script src="../lib/vue.js"></script>
+
+<script>
+  var vm = new Vue({
+    el:'#app',
+
+    // 数据集合
+    data:{
+
+    },
+
+    methods:{
+      box(e){
+        console.log(e)
+      },
+      btn(e){
+        console.log(e)
+      },
+      pop:function(){
+        alert('弹弹弹，弹你小JJ！！')
+      },
+      capbtn:function () {
+        console.log('改事件会被捕获')
+      },
+      capevent(){
+        console.log('捕获内层点击事件')
+      },
+      clself(){
+        console.log('触发自身事件')
+      }
+    }
+  })
+</script>
+</body>
+</html>

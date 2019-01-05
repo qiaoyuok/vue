@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        /*通过定义属性v-cloak来控制当data属性没渲染完成就显示的情况*/
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <!--在style重定义v-cloak的样式，默认的display是none，解决先显示 {{ msg }} 在显示真实值的情况-->
+    <p v-cloak>{{ msg }}</p>
+
+    <!--效果与定义v-cloak属性一样的   只是p标签之间的内容不会显示-->
+    <p v-text="msg"></p>
+
+    <!--渲染HTML标签属性-->
+    <p v-html="msg2">对对对</p>
+
+    <!--绑定属性  使用v-bind:属性 同时 属性值可进行js 运算-->
+    <!--可以简写  :绑定的属性-->
+    <button v-bind:title="title + '123'">点我</button>
+
+    <!--绑定点击事件 v-on:click -->
+    <!--可以简写  @click-->
+    <button v-bind:title="title + '123'" v-on:click="show">点我</button>
+    <button v-bind:title="title + '123'" @click="show('ss')">点我</button>
+
+
+
+</div>
+<script src="../lib/vue.js"></script>
+
+<script>
+    var vm = new Vue({
+      el:'#app',
+
+      // 数据集合
+      data:{
+        msg:'你好啊',
+        msg2:"<h1 style='color: red;'>你好</h1>",
+        title:'绑定的属性'
+      },
+
+      // 注册方法
+      methods:{
+        show:function (e) {
+          alert(e)
+        }
+      }
+    })
+</script>
+</body>
+</html>

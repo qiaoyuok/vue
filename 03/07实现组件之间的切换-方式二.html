@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        ul{
+            list-style: none;
+            width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #256540;
+            margin: 20px 30%;
+            height: 60px;
+            padding: 0;
+        }
+        ul li{
+            width: 50%;
+            text-align: center;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .content{
+            width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*background: red;*/
+            margin: 20px 30%;
+        }
+
+        .v-enter,.v-leave-to{
+            opacity: 0;
+            transform: translateX(150px);
+        }
+
+        .v-enter-active,.v-leave-active{
+            transition: all 0.4s ease;
+        }
+    </style>
+</head>
+<body>
+<!--使用 v-if 进行切换-->
+<div id="app">
+    <div>
+        <ul>
+            <li @click="change('login')">登录</li>
+            <li @click="change('register')">注册</li>
+        </ul>
+
+        <!--component 是Vue 提供的特定标签-->
+        <!--至此 共接触到的 Vue 提供的特定组件 有 component , template , transition , transition-group-->
+        <!--mode 属性 out-in 可以设定一个元素出去后 另外一个元素再进来-->
+        <transition mode="out-in">
+            <component :is="com"></component>
+        </transition>
+    </div>
+</div>
+
+<template id="login">
+    <div class="content">用户登录</div>
+</template>
+
+<template id="register">
+    <div class="content">用户注册</div>
+</template>
+
+<script>
+
+
+
+  var vm = new Vue({
+    el: '#app',
+    // 定义私有的组件
+    data:{
+      com:"login"
+    },
+    components:{
+      'login':{template:"#login"},
+      'register':{template:"#register"},
+    },
+    methods:{
+      change:function (v) {
+        console.log(v)
+        this.com = v
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

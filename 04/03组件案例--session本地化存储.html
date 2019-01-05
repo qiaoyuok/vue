@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../lib/vue.js"></script>
+    <style>
+        #content{
+            padding: 50px 0;
+            width: 100%;
+        }
+        #content #header{
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        #content ul{
+            list-style: none;
+            width: 100%;
+            margin-top: 50px;
+        }
+        #content ul li{
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 40px;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <com :sonlist="list" @fun="showList"></com>
+</div>
+
+<template id="temp1">
+    <div id="content">
+       <div id="header">
+           <div><label>姓名</label><input type="text" v-model="name"></div>
+           <div><label>代表作</label><input type="text" v-model="content"></div>
+           <div>
+               <button @click="postCom">提交</button>
+           </div>
+       </div>
+
+        <ul>
+            <li v-for="item in sonlist">
+                <p>{{item.id}}</p>
+                <p>{{item.name}}</p>
+                <p>{{item.content}}</p>
+            </li>
+        </ul>
+    </div>
+</template>
+
+<script>
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        list:[
+          {id:1,name:'王菲',content:'红豆'},
+          {id:2,name:'成龙',content:'红番区'},
+          {id:3,name:'刘德华',content:'忘情水'},
+        ]
+      },
+      created:function(){
+        this.showList();
+      },
+      methods:{
+        showList(){
+          var list = (sessionStorage.getItem('com') == 'undefined' ||sessionStorage.getItem('com') == null || sessionStorage.getItem('com') == '') ? '[]' : sessionStorage.getItem('com');
+          // console.log(list)
+          this.list = JSON.parse(list);
+        }
+      },
+      components:{
+        com:{
+          data:function(){
+            return {
+              name:'',
+              content:''
+            }
+          },
+          template:"#temp1",
+          props:['sonlist'],
+          methods:{
+            postCom(){
+                var list = (sessionStorage.getItem('com') == 'undefined' ||sessionStorage.getItem('com') == null || sessionStorage.getItem('com') == '') ? '[]' : sessionStorage.getItem('com');
+                console.log(sessionStorage.getItem('com'))
+                list = JSON.parse(list);
+                console.log(list);
+                var length = list.length;
+                list.unshift({id:length+1,name:this.name,content:this.content});
+                sessionStorage.setItem('com',JSON.stringify(list));
+                this.$emit('fun');
+            }
+          }
+        }
+      },
+    })
+</script>
+
+</body>
+</html>

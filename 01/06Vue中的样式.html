@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .red{
+            color: #ff0000;
+        }
+
+        .space{
+            color: #0000ff;
+            letter-spacing: 2em;
+            font-style: italic;
+        }
+
+        .thin{
+            font-weight: lighter;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+
+    <!--当时用 Vue 来定义样式时 class 接收的应该是一个 类名的 数组-->
+    <h1 :class="['red']">这是一各大标题</h1>
+
+    <!-- 三目运算符 实现 动态样式的定义 -->
+    <h2 :class="[flag?'space':'']">这是一个二级标题</h2>
+    <h2 :class="[{'space':flag}]">这是一个二级标题</h2>
+
+    <!--通过对象的方式实现一次性定义多个 类名 对象中的键时类名 可带引号 可不带-->
+    <h2 :class="{space:flag,thin:isthin}">这是一个二级标题</h2>
+
+    <h2 :class="classObj">这是一个二级标题</h2>
+
+
+
+</div>
+<script src="../lib/vue.js"></script>
+
+<script>
+  var vm = new Vue({
+    el:'#app',
+
+    // 数据集合
+    data:{
+      flag:false,
+      isthin:false,
+      classObj:{space:1,thin:1}
+    },
+  })
+</script>
+</body>
+</html>

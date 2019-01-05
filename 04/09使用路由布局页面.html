@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <!--通过给路由显示器 添加 name 属性 并且 在路由 规则中 使用  components 复数的形式 定义 规则-->
+    <router-view></router-view>
+    <router-view name="left"></router-view>
+    <router-view name="content"></router-view>
+
+</div>
+
+<script>
+
+  var header = {
+    template: '<h1>这是头部</h1>'
+  }
+
+  var left = {
+    template: '<h1>这是侧边栏</h1>'
+  }
+
+  var content = {
+    template: '<h1>这是主题内容</h1>'
+  }
+
+  // 定义路由
+  var router = new VueRouter({
+    routes: [
+      {
+        path: '/', components:  {       // components 使用 复数定义规则
+          default:header,       //默认的
+          left:left,        // 显示器name 是 left 的
+          content:content
+        }
+      }
+    ]
+  })
+
+  var vm = new Vue({
+    el: '#app',
+    router
+  })
+</script>
+
+</body>
+</html>

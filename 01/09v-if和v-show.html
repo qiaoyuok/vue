@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+
+    <button @click="toogle">控制</button>
+    <button @click="flag = !flag">控制</button>
+
+    <!--直接移除标签或添加标签  较高的性能消耗-->
+    <p v-if="flag">我是if控制的</p>
+
+    <!--通过display样式 来控制显示或隐藏    较高的初始渲染消耗-->
+    <p v-show="flag">我是show控制的</p>
+
+</div>
+<script src="../lib/vue.js"></script>
+
+
+<script>
+  var vm = new Vue({
+    el:'#app',
+    // 数据集合
+    data:{
+        flag:true
+    },
+    methods:{
+      toogle:function(){
+        this.flag = !this.flag;
+      }
+    }
+  })
+</script>
+</body>
+</html>

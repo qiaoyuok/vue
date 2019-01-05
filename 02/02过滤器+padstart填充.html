@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+
+<div id="app1">
+    <div>{{ time | date1 }}</div>
+</div>
+
+<div id="app2">
+    <div>{{ time | data1}}</div>
+</div>
+<script>
+
+
+    // 当全部过滤器和局部过滤器同时存在时，优先使用自身的过滤器
+    // // 定义全局过滤器
+    Vue.filter('date1',function (data) {
+      var d = new Date(data);
+      var time = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDay()+"\t"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+        return time+"~~~~";
+    })
+    var vm1 = new Vue({
+      el:"#app1",
+      data:{
+        time: new Date()
+      }
+    });
+
+    var vm2 = new Vue({
+      el:"#app2",
+      data:{
+        time: new Date()
+      },
+      // 局部过滤器
+      filters:{
+        data1:function(data){
+          console.log(111)
+          var d = new Date(data);
+          var time = d.getFullYear()+"-"+(d.getMonth()+1).toString().padStart(2,'0')+"-"+d.getDay().toString().padStart(2,'0')+"\t"+d.getHours().toString().padStart(2,'0')+":"+d.getMinutes().toString().padStart(2,'0')+":"+d.getSeconds().toString().padStart(2,'0');
+          return time+"+++++";
+        }
+      }
+    })
+</script>
+</body>
+</html>

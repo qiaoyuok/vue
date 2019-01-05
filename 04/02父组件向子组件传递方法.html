@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <!--通过 v-on或 @绑定方法 值是父组件中的方法名-->
+    <com v-on:fun="show"></com>
+</div>
+
+<!--1.定义组件模板-->
+<template id="temp1">
+    <div>
+        <p @click="cli(222)">这是一个子组件</p>
+    </div>
+</template>
+
+
+<script>
+  var com = {
+    template: '#temp1',
+    data () {
+      return {
+        msg: '子组件中的值'
+      }
+    },
+    methods: {
+      cli (e) {
+        // emit  原意是出发调用的意思
+        // 第一个参数是绑定的方法名 ，其后的参数都是 参数
+        this.$emit('fun', e, this.msg)
+      }
+    }
+  }
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      name: '父组件中的值',
+      msg: ''
+    },
+    // 定义私有的组件
+    components: {
+      com
+    },
+    methods: {
+      show: function (data, msg) {
+        this.msg = msg;
+        console.log(data + '调用父组件中的show方法')
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <!--第三方动画库-->
+    <link rel="stylesheet" href="../lib/animate.css">
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <button @click="toogle">显示/隐藏</button>
+
+    <!--&lt;!&ndash;transition是 Vue 官方提供的标签 animate三方库即可实现  animated 为基础类必须要带 duration设置动画时长&ndash;&gt;-->
+    <!--<transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut" :duration="400">-->
+        <!--<div v-if="flag" id="box">-->
+
+        <!--</div>-->
+    <!--</transition>-->
+
+    <!--transition是 Vue 官方提供的标签 animate三方库即可实现  animated 为基础类必须要带 duration设置动画时长 分别设置入场和出场时间-->
+    <transition enter-active-class="animated bounceIn"
+                leave-active-class="animated bounceOut"
+                :duration="{enter:200,leave:500}">
+        <div v-if="flag" id="box">
+
+        </div>
+    </transition>
+</div>
+
+<script>
+  var vm = new Vue({
+    el:'#app',
+    data:{
+      flag:false
+    },
+    methods:{
+      toogle:function(){
+        this.flag = !this.flag
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <diycom></diycom>
+</div>
+
+<div id="app2">
+    <diycom></diycom>
+</div>
+
+<!--在APP方位之外自定义模板文件-->
+<template id="diytem">
+    <div>
+        <p> 这是一个app范围之外的自定义模板组件 </p>
+        <p> 模板：是UI层面的HTML扩展</p>
+        <p> 模块：是逻辑层面的</p>
+    </div>
+</template>
+
+<script>
+    // 全局组件的定义
+
+  // ************************** 第一种方式，分两步走 ****************************
+  // 1.创建组件模板对象  ，组件模板 必须有且只有唯一的一个  根元素
+  // var com = Vue.extend({
+  //   template:"<h1>This is a diy template!!!</h1>"
+  // });
+  //
+  // // 2.使用组件模板 Vue.component(组件名，创建的模板对象)
+  // 如果祖建名使用驼峰法命名  则使用时 需要用 - 分隔开
+  // Vue.component('my-com',com);
+
+  // ************************* 第二种方式 一步完成 *****************************
+  // Vue.component('my-com', {
+  //   template: '<p>这是一个P标签</p>'
+  // })
+
+  // 或者
+  // Vue.component('my-com', Vue.extend({template: '<p>这是一个P标签</p>'}))
+
+  // ************************* 第三种方式 在 app 范围之外定义模板  *****************************
+  Vue.component('diycom',{
+    template:"#diytem"
+  })
+
+
+  var vm = new Vue({
+    el: '#app',
+  })
+
+  var vm = new Vue({
+    el: '#app2',
+  })
+</script>
+
+</body>
+</html>

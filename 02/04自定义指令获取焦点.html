@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .header{
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header input{
+            padding: 0.4em;
+            outline: none;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+        .header button{
+            width: 50px;
+            height: 30px;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+        .table{
+            width: 100%;
+        }
+        .table th,.table td{
+            text-align: center;
+            padding: 0.3em;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="header">
+        <div><label>ID:</label><input type="text" v-model="id"></div>
+        <div><label>Name:</label><input type="text" v-model="name" @keyup.f2="add"></div>
+        <button @click="add">添加</button>
+        <div>
+            <label>品牌搜索</label>
+            <input type="text" v-model="keyword" v-focus v-color="'blue'"></div>
+    </div>
+    <table border="1" cellpadding="0" cellspacing="0"  class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Ctime</th>
+            <th>Option</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item,i) in search(keyword)" :key="i">
+            <td>{{ item.id}}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.ctime | format }}</td>
+            <td><a @click.prevent="del(i)" href="#">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+
+  // 全局定义过滤器
+  Vue.filter('format',function (data) {
+    var d = new Date(data);
+    var time = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDay()+"\t"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+    console.log(time);
+    return time;
+
+  })
+
+  // 自定义全局指令
+  // 通过 directive方法可以绑定执行指令  第一个参数是 指令名称（绑定不需要加 v-  使用的时候需要） 第二个参数是一个对象，里面有各个阶段执行的指令
+  Vue.directive('focus',{
+
+    bind:function(el){      //bind  只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置
+      // el.focus()
+    },
+    inserted:function(el){      //被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+      el.focus()
+    },
+    update:function (el) {      //所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新
+
+    }
+  });
+
+  Vue.directive('color',{
+    bind(el,param){
+      console.log(param)
+      el.style.color=param.value
+    }
+  })
+  // 定义全局键盘吗
+
+  Vue.config.keyCodes.f2 = 113;
+  var vm = new Vue({
+    el:"#app",
+    data:{
+      id:null,
+      name:null,
+      keyword:null,
+      list:[
+        {id:1,name:'奔驰',ctime:new Date()},
+        {id:2,name:'宝马',ctime:new Date()},
+        {id:3,name:'奇瑞',ctime:new Date()},
+      ]
+    },
+    methods:{
+      add(){
+        this.list.push({id:this.id,name:this.name,ctime:new Date()})
+        this.name = this.id = null;
+      },
+      del:function(i){
+        console.log(i)
+        // 删除一个元素  删除起始位置 删除长度
+        this.list.splice(i,1)
+      },
+      search(keyword){
+        if(keyword != null && keyword != ''){
+          var newList = [];
+          this.list.forEach(item=>{
+            if (item.name.indexOf(keyword) != -1){
+              newList.push(item);
+            }
+          })
+          return newList;
+        }
+        return this.list;
+      }
+    }
+  })
+
+</script>
+
+</body>
+</html>

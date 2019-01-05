@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <router-link to="/login">登录</router-link>
+    <router-link to="/register">注冊</router-link>
+
+    <router-view></router-view>
+</div>
+
+<script>
+
+  var login = {
+    template: '<h1>用户登录</h1>'
+  }
+
+  var register = {
+    template: '<h1>用户注册</h1>'
+  }
+
+  // 实例化路由对象
+  var router = new VueRouter({
+    routes: [
+      {path: '/login', component: login},
+      {path: '/register', component: register},
+    ]
+  })
+
+  var vm = new Vue({
+    el: '#app',
+
+    router,
+    // 通过watch监测路由地址变化
+    watch: {
+      '$route.path': function (newRouter, oldRouter) {
+        console.log(newRouter + '---------' + oldRouter)
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+
+    <!--数组的循环 只有一个参数是 item 是值-->
+    <ul>
+        <li v-for="item in list">{{ item }}</li>
+    </ul>
+
+    <!--数组的循环  当有两个参数时，第一个是元素，第二个是索引-->
+    <ul>
+        <li v-for="(item,i) in list">{{i}}----{{ item }}</li>
+    </ul>
+
+    <!--对象的循环   当有两个参数时，第一个是元素，第二个是索引-->
+    <ul>
+        <li v-for="(item,i) in objlist">{{i}}----{{ item.name }}----{{ item.age }}</li>
+    </ul>
+
+    <!--循环数字-->
+    <ul>
+        <li v-for="item in 10" :key="item">{{item}}</li>
+    </ul>
+</div>
+<script src="../lib/vue.js"></script>
+
+<script>
+  var vm = new Vue({
+    el:'#app',
+    // 数据集合
+    data:{
+        list:[1,2,3,4],
+      objlist:[{name:'wangfei',age:23},{name:'lining',age:33},]
+    },
+  })
+</script>
+</body>
+</html>

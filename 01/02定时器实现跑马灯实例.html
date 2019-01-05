@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <button @click="lang">浪狼</button>
+    <button @click="bulang">不浪</button>
+
+    <h1 style="color:red">{{ msg }}</h1>
+</div>
+<script src="../lib/vue.js"></script>
+
+<script>
+  var vm = new Vue({
+    el:'#app',
+
+    // 数据集合
+    data:{
+      msg:'猥琐发育~~ 别浪！！',
+      tmpmsg:'猥琐发育~~ 别浪！！',
+      timer:null
+    },
+
+    methods:{
+      lang:function(){
+        var start = this.msg.substring(0,1);
+        var end = this.msg.substring(1);
+
+        this.msg = end + start;
+        console.log(this.msg)
+
+        // 使用settimeout实现
+        // clearTimeout(this.time)
+        // this.timer = setTimeout(()=>{
+        //   this.lang()
+        // },500)
+
+        //使用setinterval实现
+        clearInterval(this.timer)
+        this.timer = setInterval(()=>{
+          this.lang()
+        },500)
+      },
+      bulang(){
+
+        clearTimeout(this.timer);
+
+        clearInterval(this.timer);
+
+        this.msg = this.tmpmsg;
+      }
+    }
+  })
+</script>
+</body>
+</html>

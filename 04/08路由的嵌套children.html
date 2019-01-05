@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+    <router-link to="/box">去往盒子</router-link>
+
+    <router-view></router-view>
+</div>
+
+<template id="box">
+    <div>
+        <p>这是一个盒子组件</p>
+        <router-link to="/box/login">用户登录</router-link>
+        <router-link to="/box/register">用户注册</router-link>
+        <router-view></router-view>
+    </div>
+</template>
+
+<script>
+
+    var box = {
+      template:"#box"
+    }
+    var login = {
+      template:"<h3>请登录！</h3>"
+    }
+    var register = {
+      template:"<h3>请注册！</h3>"
+    }
+    // 定义路由
+    var router = new VueRouter({
+      routes:[
+        {
+          path:'/box',
+          component: box,
+          children:[        //使用children 对象定义
+            {path:'login',component: login},        //嵌套的路由之前不需要带 / 跟目录
+            {path:'register',component: register},
+          ]
+        },
+
+      ]
+    })
+    var vm = new Vue({
+      el:"#app",
+        router
+    })
+</script>
+
+</body>
+</html>

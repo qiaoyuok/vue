@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        /*进入的初始状态，离开后的终止状态*/
+        .v-enter,.v-leave-to{
+            opacity: 0;
+            transform: translateX(60px);
+        }
+
+        /*入场,出场动画的时间段*/
+        .v-enter-active,
+        .v-leave-active{
+            transition:all 1.4s ease;
+        }
+
+        /*进入的初始状态，离开后的终止状态*/
+        .my-enter,.my-leave-to{
+            opacity: 0;
+            transform: translateY(80px);
+        }
+
+        /*入场,出场动画的时间段*/
+        .my-enter-active,
+        .my-leave-active{
+            transition:all 1.4s ease;
+        }
+        #box{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <button @click="toogle">显示/隐藏</button>
+
+    <!--transition是 Vue 官方提供的标签 再配合 .v-enter .v-leave-to .v-leave-active .v-enter-active等类即可实现简单动画-->
+    <transition>
+        <div v-if="flag" id="box">
+
+        </div>
+    </transition>
+
+    <!--通过name属性可以自定义多个动画 代替默认的  v  -->
+    <transition name="my">
+        <div v-if="flag" id="box">
+
+        </div>
+    </transition>
+</div>
+
+<script>
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        flag:false
+      },
+      methods:{
+        toogle:function(){
+          this.flag = !this.flag
+        }
+      }
+    })
+</script>
+
+</body>
+</html>

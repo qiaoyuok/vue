@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--通过 v-bind 绑定属性 将 父组件中的值传递给子组件-->
+    <com v-bind:title="name"></com>
+</div>
+<script>
+
+  var vm = new Vue({
+    el: '#app',
+    // 定义私有的组件
+    data:{
+      name:'父组件中的值'
+    },
+    components:{
+      // 1.默认情况下，子组件无法访问父组件中的 data 数据 和 方法
+      // 2.在组件使用时 可以通过 v-bind 属性绑定的方法传递给子组件
+      // 3.定义子组件中的属性 props 数组 ，把刚才定义的属性加上即可
+
+      'com':{
+
+        // 子组件中的数据是自身私有的，可读可写
+        data:function(){
+          return {
+            id:1,
+            name:'qiao'
+          }
+        },
+        template:"<h1>你好啊{{title}}</h1>",
+        props:['title'],    // 注意：子组件中所有 props 中的数据 都是通过 父组件传递过来的，只能读取，不可修改
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

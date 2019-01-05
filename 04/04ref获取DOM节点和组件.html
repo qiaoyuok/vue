@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <button @click="refOpt">ref操作</button>
+
+    <p ref="p">hello</p>
+
+    <hr>
+
+    <com ref="sonCom"></com>
+</div>
+
+<script>
+
+    var com = {
+      template:"<h1>这是一个子组件</h1>",
+      data(){
+        return {
+          msg:"这是子组件的内容"
+        }
+      },
+      methods:{
+        demo(){
+          console.log("这是子组件的方法")
+        }
+      }
+    }
+
+    var vm = new Vue({
+      el:'#app',
+      methods:{
+        refOpt:function () {
+
+          // 通过ref获取DOM节点  refs 意思是 引用
+            console.log(this.$refs.p.innerHTML)
+
+          // 可以通过此方法调用子组件的方法或属性
+          this.$refs.sonCom.demo()
+        }
+      },
+      components:{
+        com
+      }
+    })
+</script>
+
+</body>
+</html>
